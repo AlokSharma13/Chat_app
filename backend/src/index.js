@@ -37,11 +37,12 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/requests", messageRequestRoutes);
 
-// Production static files
+// Production static files - MUST come after API routes
 if(process.env.NODE_ENV === "production"){
     app.use(express.static(path.join(__dirname,"../frontend/dist")));
     
-    app.get("*",(req,res) =>{
+    // Wildcard route for SPA - must be LAST
+    app.get("*", (req,res) => {
         res.sendFile(path.resolve(__dirname,"../frontend/dist/index.html"));
     });
 }

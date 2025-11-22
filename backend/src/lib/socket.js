@@ -14,7 +14,18 @@ const typingUsers = new Map();
 
 export function initializeSocket(httpServer) {
     server = httpServer;
-    const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+    
+    // Build CORS origins safely
+    let clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+    
+    // Validate URL format
+    try {
+        new URL(clientUrl);
+    } catch (e) {
+        console.warn(`Invalid CLIENT_URL: ${clientUrl}, falling back to localhost`);
+        clientUrl = "http://localhost:5173";
+    }
+    
     io = new Server(server, {
         cors: {
             origin: clientUrl,

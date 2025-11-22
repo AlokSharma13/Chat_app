@@ -10,11 +10,11 @@ import {
 
 const router = express.Router();
 
+// Get count of pending requests (must come before /:requestId routes)
+router.get("/count", protectRoute, getRequestCount);
+
 // Get all pending message requests
 router.get("/", protectRoute, getMessageRequests);
-
-// Get count of pending requests
-router.get("/count", protectRoute, getRequestCount);
 
 // Accept a message request
 router.post("/:requestId/accept", protectRoute, acceptMessageRequest);
