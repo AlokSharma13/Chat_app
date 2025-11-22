@@ -42,7 +42,7 @@ export const signup = async(req,res) => {
         }
 
     } catch (error) {
-        console.log("Error in signup controller, error.message");
+        console.log("Error in signup controller", error.message);
         res.status(500).json({message:"Internal Server Error"});
     }
     
@@ -93,7 +93,7 @@ export const updateProfile = async (req,res)=>{
         const userId = req.user._id;
 
         if(!profilePic){
-            return res.status(400).jason({message:"Profile pic is required"});
+            return res.status(400).json({message:"Profile pic is required"});
         }
 
         const uploadRespose = await cloudinary.uploader.upload(profilePic);

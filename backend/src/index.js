@@ -2,27 +2,24 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import path from "path";
+import http from "http";
 
 import {connectDB} from "./lib/db.js";
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
 import messageRequestRoutes from "./routes/messageRequest.route.js";
 import cors from "cors";
-import {io,app,server} from "./lib/socket.js";  
-
-
+import {initializeSocket} from "./lib/socket.js";  
 
 dotenv.config();
+const app = express();
 
-
-
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5001;
 const __dirname = path.resolve();
 
+// Middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
-
-app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
@@ -33,11 +30,12 @@ app.use(cors({
     credentials: true
 }));
 
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/requests", messageRequestRoutes);
 
-app.use("/api/auth",authRoutes);
-app.use("/api/messages",messageRoutes);
-app.use("/api/requests",messageRequestRoutes);
-
+// Production static files
 if(process.env.NODE_ENV === "production"){
     app.use(express.static(path.join(__dirname,"../frontend/dist")));
     
@@ -45,6 +43,10 @@ if(process.env.NODE_ENV === "production"){
         res.sendFile(path.resolve(__dirname,"../frontend/dist/index.html"));
     });
 }
+
+// Create HTTP server and initialize Socket.IO
+const server = http.createServer(app);
+const { io } = initializeSocket(server);
 
 server.listen(PORT, () =>{
     console.log("server is running on PORT:"+ PORT);

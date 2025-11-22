@@ -12,7 +12,10 @@ import { Toaster } from "react-hot-toast";
 
 
 const App = () => {
-  const {authUser , checkAuth,isCheckingAuth, onlineUsers} = useAuthStore();
+  const authUser = useAuthStore(state => state.authUser);
+  const checkAuth = useAuthStore(state => state.checkAuth);
+  const isCheckingAuth = useAuthStore(state => state.isCheckingAuth);
+  const onlineUsers = useAuthStore(state => state.onlineUsers);
 
   console.log(onlineUsers);
 
