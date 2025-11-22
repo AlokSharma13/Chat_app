@@ -14,9 +14,10 @@ const typingUsers = new Map();
 
 export function initializeSocket(httpServer) {
     server = httpServer;
+    const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
     io = new Server(server, {
         cors: {
-            origin: "http://localhost:5173",
+            origin: clientUrl,
             credentials: true
         },
         pingTimeout: 60000,
