@@ -26,9 +26,10 @@ export function initializeSocket(httpServer) {
         clientUrl = "http://localhost:5173";
     }
     
+    const allowedOrigins = ["http://localhost:5173", clientUrl].filter(Boolean);
     io = new Server(server, {
         cors: {
-            origin: clientUrl,
+            origin: allowedOrigins,
             credentials: true
         },
         pingTimeout: 60000,

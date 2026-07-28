@@ -51,7 +51,10 @@ if(process.env.NODE_ENV === "production"){
 const server = http.createServer(app);
 const { io } = initializeSocket(server);
 
-server.listen(PORT, () =>{
-    console.log("server is running on PORT:"+ PORT);
-    connectDB();
+connectDB().then(() => {
+    server.listen(PORT, () =>{
+        console.log("server is running on PORT:"+ PORT);
+    });
+}).catch((error) => {
+    console.error("Failed to start server due to DB connection error:", error);
 });

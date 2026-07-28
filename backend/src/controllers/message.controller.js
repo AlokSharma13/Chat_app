@@ -75,8 +75,10 @@ export const searchUsers = async (req, res) => {
         // First, try to search by MongoDB ObjectId if the query looks like an ID
         if (mongoose.Types.ObjectId.isValid(searchTerm)) {
             const userById = await User.findOne({
-                _id: searchTerm,
-                _id: { $ne: loggedInUserId }
+                $and: [
+                    { _id: searchTerm },
+                    { _id: { $ne: loggedInUserId } }
+                ]
             }).select("-password");
             
             if (userById) {
