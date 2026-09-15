@@ -8,10 +8,10 @@
 
 <br/>
 
-<a href="https://chat-app-cezq.onrender.com/">
+<a href="https://chat-app-cezq.onrender.com/" target="_blank" rel="noopener noreferrer">
   <img src="https://img.shields.io/badge/%F0%9F%9A%80_Live_Demo-Chat_App-36BCF7?style=for-the-badge" alt="Live Demo" />
 </a>
-<a href="https://github.com/AlokSharma13/Chat_app">
+<a href="https://github.com/AlokSharma13/Chat_app" target="_blank" rel="noopener noreferrer">
   <img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github" alt="GitHub Repository" />
 </a>
 
